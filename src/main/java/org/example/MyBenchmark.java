@@ -27,32 +27,18 @@ package org.example;
 
 import org.openjdk.jmh.annotations.*;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class MyBenchmark {
 
-    /*static Random r = new Random(Calendar.getInstance().getTimeInMillis());
-
-    @State(Scope.Thread)
-    public static class Array {
-
-        @Setup(Level.Invocation)
-        public void doSetup() {
-            for (int i = 0; i < 100000; i++) {
-                elements[i] = r.nextInt(30000);
-            }
-        }
-
-        public int[] elements = new int[100000];
-    }*/
-
     @Benchmark @Fork(1) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void testMethod() {
         // place your benchmarked code here
-        // Arrays.sort(a.elements);
-        int[] numbers = new int[] {9, 5, 2, 23, 8, 4, 345, 3, 4523, 54 ,2};
-        Arrays.sort(numbers);
-        MyFunctions.calcPrimesNumber1(1000000);
+        int limit = 10000000; // from 1 to 100000000
+//        MyFunctions.testTimeArrays1(limit);
+//        MyFunctions.testTimeArrays2(limit);
+//        MyFunctions.calcPrimesNumber1(limit);
+        MyFunctions.calcPrimesNumber2(limit);
     }
+
 }
