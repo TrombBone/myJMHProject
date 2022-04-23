@@ -162,6 +162,16 @@ questions.
                             <goal>testCompile</goal>
                         </goals>
                     </execution>
+                    <!-- Replacing default-compile as it is treated specially by maven -->
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <!-- Replacing default-testCompile as it is treated specially by maven -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
                 </executions>
                 <configuration>
                     <compilerVersion>${javac.target}</compilerVersion>
