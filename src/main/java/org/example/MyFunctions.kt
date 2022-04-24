@@ -46,7 +46,7 @@ class MyFunctions {
          *
          * R очень велика, так как в обоих массивых хранятся сами числа,
          * на значениях близких к 10^9 возникнет Java Heap Space Error
-         * Зато трудоёмкость действительно O(N)
+         * Но трудоёмкость действительно O(N)
          */
         @JvmStatic
         fun calcPrimesNumber2(limit: Int): Int {
@@ -68,6 +68,44 @@ class MyFunctions {
         }
 
         /**
+         * Подсчёт количества простых чисел в интевале до limit
+         * Тест для проверки задержки во времени MutableList
+         *
+         * Решенеие решетом Эратосфена с линейным временем работы
+         * link: https://ru.wikipedia.org/wiki/Решето_Эратосфена#Решето_Эратосфена_с_линейным_временем_работы
+         *
+         * T = O(N)
+         * R = O(N + M),
+         * где N - количество чисел (limit),
+         * M - количество простых чисел среди N чисел
+         *
+         * R очень велика, так как в обоих массивых хранятся сами числа,
+         * на значениях близких к 10^9 возникнет Java Heap Space Error
+         * Но трудоёмкость действительно O(N)
+         */
+        @JvmStatic
+        fun testCalcPrimesNumber2(limit: Int, countPrimes: Int): Int {
+            val primes = IntArray(countPrimes)
+            if (limit <= 1) return 0
+            val allNumbers = IntArray(limit - 1)
+            var saveI = 0
+            for (i in 0..limit - 2) {
+                if (allNumbers[i] == 0) {
+                    allNumbers[i] = i + 2
+                    primes[saveI] = i + 2
+                    saveI++
+                }
+                for (p in primes) {
+                    if (p == 0) break
+                    if (p > allNumbers[i] || p * (i + 2) > limit) break
+                    allNumbers[p * (i + 2) - 2] = p
+                }
+            }
+            return primes.size
+        }
+
+        /*
+        /**
          * Тест времени для заполненеия BitSet длиной limit-1
          * противоположными значениями (true)
          */
@@ -80,18 +118,15 @@ class MyFunctions {
         /**
          * Тест времени для заполненеия IntArray длиной limit-1
          * значениями самих чисел (i)
-         * и заполенения mutableList наполовину теми же значениями
-         * (для породиования заполнения простыми числами)
+         * и заполенения mutableList длиной countPrimes значениями i
          */
         @JvmStatic
-        fun testTimeArrays2(limit: Int) {
+        fun testTimeArrays2(limit: Int, countPrimes: Int) {
             val allNumbers = IntArray(limit - 1)
-            val primes = mutableListOf<Int>()
-            for (i in 0 until limit - 1) {
-                allNumbers[i] = i
-                if (i % 2 == 0) primes.add(i)
-            }
+            val primes = IntArray(countPrimes)
+            for (i in 0 until limit - 1) allNumbers[i] = i
+            for (i in 0 until countPrimes) primes[i] = i
         }
-        //
+        */
     }
 }
