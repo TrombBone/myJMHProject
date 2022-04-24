@@ -27,24 +27,42 @@ package org.example;
 
 import org.openjdk.jmh.annotations.*;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MyBenchmark {
 
     @State(Scope.Thread)
     public static class MyState {
-        public int limit = 100000000; // from 1 to 100_000_000
+        public int limit = 10000000; // from 1 to 100_000_000
         public int primes = MyFunctions.calcPrimesNumber1(limit);
     }
 
     @Benchmark @Fork(1) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public void testMethod(MyState state) {
+    public void test_CalcPrimesNumber1(MyState state) {
+        MyFunctions.calcPrimesNumber1(state.limit);
+    }
+
+    @Benchmark @Fork(1) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    public void test_CalcPrimesNumber2(MyState state) {
+        MyFunctions.calcPrimesNumber2(state.limit);
+    }
+
+//    @Benchmark @Fork(1) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.MICROSECONDS)
+//    public void testMethod(MyState state) {
         // place your benchmarked code here
 //        MyFunctions.testTimeArrays1(state.limit);
 //        MyFunctions.testTimeArrays2(state.limit, state.primes);
-//        MyFunctions.calcPrimesNumber1(state.limit);
-        MyFunctions.calcPrimesNumber2(state.limit);
 //        MyFunctions.testCalcPrimesNumber2(state.limit, state.primes);
-    }
+
+//        int[] intArr = new int[1000];
+//        for (int i = 0; i < 1000; i++) intArr[i] = i;
+
+//        Integer[] integerArr = new Integer[1000];
+//        for (int i = 0; i < 1000; i++) integerArr[i] = i;
+
+//        ArrayList<Integer> arrayList = new ArrayList<Integer>(1000);
+//        for (int i = 0; i < 1000; i++) arrayList.add(i);
+//    }
 
 }
