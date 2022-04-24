@@ -31,14 +31,20 @@ import java.util.concurrent.TimeUnit;
 
 public class MyBenchmark {
 
+    @State(Scope.Thread)
+    public static class MyState {
+        public int limit = 100000000; // from 1 to 100_000_000
+        public int primes = MyFunctions.calcPrimesNumber1(limit);
+    }
+
     @Benchmark @Fork(1) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public void testMethod() {
+    public void testMethod(MyState state) {
         // place your benchmarked code here
-        int limit = 10000000; // from 1 to 100000000
-//        MyFunctions.testTimeArrays1(limit);
-//        MyFunctions.testTimeArrays2(limit);
-//        MyFunctions.calcPrimesNumber1(limit);
-        MyFunctions.calcPrimesNumber2(limit);
+//        MyFunctions.testTimeArrays1(state.limit);
+//        MyFunctions.testTimeArrays2(state.limit, state.primes);
+//        MyFunctions.calcPrimesNumber1(state.limit);
+        MyFunctions.calcPrimesNumber2(state.limit);
+//        MyFunctions.testCalcPrimesNumber2(state.limit, state.primes);
     }
 
 }
